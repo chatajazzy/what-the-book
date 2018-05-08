@@ -1,28 +1,88 @@
-.App {
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  align-items: center;
+  background-color: #f5f8fa;
+  color: #424242;
+  height: 120px;
+  font-size: 15px;
+  letter-spacing: 0.05rem;
+  padding: 0 20px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 22px;
+  margin: 15px 0;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.datasearch {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.datasearch .searchbox {
+  max-width: 100%;
+  border-radius: 30px;
+  padding: 5px 16px 5px 30px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.suggestionlist {
+  color: #424242;
+  width: 90%;
+  margin-left: 5%;
 }
 
-.App-intro {
-  font-size: large;
+.display {
+  margin-top: 120px;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.leftSidebar {
+  width: 320px;
+  height: 100%;
+  padding: 15px 20px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  border-right: 1px solid #f0f0f0;
+}
+
+.mainBar {
+  position: relative;
+  background-color: #fefefe;
+  top: 250px;
+}
+
+.result-data .result-image {
+  background-size: cover;
+  max-height: 200px;
+}
+
+@media screen and (min-width: 600px) {
+  .mainBar {
+    left: 320px;
+    top: 0;
+    width: calc(100% - 320px);
+    padding: 0px 30px;
+  }
+  .datasearch .searchbox {
+    min-width: 400px;
+  }
+  .display,
+  .navbar {
+    display: flex;
+    height: 80px;
+  }
+  .navbar {
+    padding: initial;
+  }
+
+  .logo {
+    margin: 0 0 0 15px;
+    text-align: left;
+  }
 }
