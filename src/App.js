@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import {
   ReactiveBase,
   DataSearch,
+  MultiList,
+  RangeSlider,
   SingleRange,
+  SelectedFilters,
   ResultCard
 } from '@appbaseio/reactivesearch';
 import './App.css';
@@ -46,21 +49,87 @@ class App extends Component {
                 { start: 2, end: 5, label: '★★ & up' },
                 { start: 1, end: 5, label: '★ & up' }
               ]}
+              react={{
+                and: 'mainSearch'
+              }}
+              filterLabel="Ratings"
+            />
+            <RangeSlider
+              componentId="publishFilter"
+              dataField="original_publication_year"
+              title="Year of Publication"
+              filterLabel="published"
+              range={{
+                start: 1970,
+                end: 2017
+              }}
+              rangeLabels={{
+                start: '1970',
+                end: '2017'
+              }}
+              interval={2}
+              showHistogram={false}
+            />
+            <MultiList
+              componentId="authorFilter"
+              dataField="authors.raw"
+              title="Authors"
+              size={1000}
+              showCheckbox={false}
+              className="authors"
+              innerClass={{
+                list: 'author-list'
+              }}
+              placeholder="Filter by author name"
+              filterLabel="Authors"
             />
           </div>
           <div className={'mainBar'}>
+            <SelectedFilters />
             <ResultCard
               componentId="results"
               dataField="original_title"
               react={{
-                and: ['mainSearch', 'ratingsFilter']
+                and: [
+                  'mainSearch',
+                  'ratingsFilter',
+                  'publishFilter',
+                  'authorFilter'
+                ]
               }}
               pagination={true}
               size={8}
+              sortOptions={[
+                {
+                  dataField: 'average_rating',
+                  sortBy: 'desc',
+                  label: 'Ratings (High to low)'
+                },
+                {
+                  dataField: 'original_title.raw',
+                  sortBy: 'asc',
+                  label: 'Title A->Z'
+                },
+                {
+                  dataField: 'original_title.raw',
+                  sortBy: 'desc',
+                  label: 'Title Z->A'
+                }
+              ]}
               onData={res => ({
                 image: res.image,
-                title: res.original_title,
-                description: res.average_rating + ' ★ '
+                title: res.original_title || ' ',
+                description:
+                  res.average_rating +
+                  ' ★ ' +
+                  "<span style='float:right;margin-right:5px;'>Pub: " +
+                  res.original_publication_year +
+                  "</span><br/><br/><div class='result-author' title='" +
+                  res.authors +
+                  "'>by " +
+                  res.authors +
+                  '</div>',
+                url: 'https://google.com/search?q=' + res.original_title
               })}
               className="result-data"
               innerClass={{
